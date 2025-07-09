@@ -10,4 +10,10 @@ import numpy as np
 import pandas as pd
 import json
 
+# Filtrando apenas os dados nescessarios 
 
+df = pd.read_csv("HIST_PAINEL_COVIDBR_13mai2021.csv", sep=';')
+df_states = df[~df["estado"].isna() & (df["codmun"].isna())]
+df_brasil = df[df["regiao"] == "Brasil"]
+df_states.to_csv("df_state.csv")
+df_brasil.to_csv("df_brasil.csv")
