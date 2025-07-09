@@ -39,10 +39,23 @@ fig = px.choropleth_mapbox(df_states, locations="estado", color="casosNovos",
                            hover_data={"casosAcumulado": True, "casosNovos": True, 
                                        "obitosNovos": True, "estado": True})
 
+fig.update_layout(
+    mapbox_style= "carto-darkmatter"
+)
 
 #=========================================
 # Layout
 
+app.layout = dbc.Container(
+    dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="choropleth-map", figure=fig)
+        ])
+    ])
+)
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 # %%
