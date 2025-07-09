@@ -25,8 +25,9 @@ df_states = pd.read_csv("df_states.csv")
 df_brasil = pd.read_csv("df_brasil.csv")
 
 df_states_ = df_states[df_states["data"] == "2020-05-13"]
-
 brazil_states = json.load(open("geojson/brazil_geo.json"))
+df_data = df_states[df_states["estado"]=="RJ"]
+
 
 #=========================================
 # Instanciação do Dash
@@ -40,7 +41,20 @@ fig = px.choropleth_mapbox(df_states, locations="estado", color="casosNovos",
                                        "obitosNovos": True, "estado": True})
 
 fig.update_layout(
-    mapbox_style= "carto-darkmatter"
+    paper_bgcolor="#242424",
+    autosize=True,
+    margin=go.Margin(l=0, r=0, t=0, b=0),
+    showlegend=False,
+    mapbox_style="carto-darkmatter",   
+)
+
+fig2 = go.Figure(layout={"template": "plotly_dark"})
+fig2.add_trace(go.Scatter(x=df_data["data"], y=df_data["casosAcumulado"]))
+fig2.update_layout(
+    paper_bgcolor="#242424",
+    plot_bgcolor="#242424",
+    autosize=True,
+    margin=dict(l=10, r=10, t=10, b=10) 
 )
 
 #=========================================
@@ -48,6 +62,9 @@ fig.update_layout(
 
 app.layout = dbc.Container(
     dbc.Row([
+        dbc.Col([
+            dcc.Graph(id="line_graph", figure=fig2)
+        ]),
         dbc.Col([
             dcc.Graph(id="choropleth-map", figure=fig)
         ])
