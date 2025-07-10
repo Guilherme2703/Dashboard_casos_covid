@@ -63,8 +63,30 @@ fig2.update_layout(
 app.layout = dbc.Container(
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id="line_graph", figure=fig2)
+            
+            html.Div([
+                html.Img(id="logo", src=app.get_asset_url("logo_dark.png"), height=50),
+                html.H5("Evolução COVID-19"),
+                dbc.Button("BRASIL", color="primary", id="location-button", size="lg")
+            ], style={}),
+            
+            html.P("Informe a data na qual deseja obter informações:", style={"margin-top": "40px"}),
+            
+            html.Div(id="div-test", children=[
+                dcc.DatePickerSingle(
+                    id="date-picker",
+                    min_date_allowed=df_brasil["data"].min(),
+                    max_date_allowed=df_brasil["data"].max(),
+                    initial_visible_month=df_brasil["data"].min(),
+                    date=df_brasil["data"].max(),
+                    display_format="MMMM D, YYYY",
+                    style={"border": "0px solid black"},
+                )
+            ]),
+            
+            dcc.Graph(id="line_graph", figure=fig2),
         ]),
+
         dbc.Col([
             dcc.Graph(id="choropleth-map", figure=fig)
         ])
