@@ -83,6 +83,21 @@ app.layout = dbc.Container(
                     style={"border": "0px solid black"},
                 )
             ]),
+
+            dbc.Row([
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardBody([
+                            html.Span("Casos recuperados"),
+                            html.H3(style={"color": "#adfc92"}, id="casos-recuperados-text"),
+                            html.Span("Em acompanhamento"),
+                            html.H5(id="em-acompanhamento-text"),
+                        ])
+                    ], color="light", outline=True, style={"margin-top": "10px",
+                                                           "box-shadow": "0 4px 4px 0 rgba(0,0,0,0.15), 0 4px 20px 0 rgba(0,0,0,0.19)",
+                                                           "color": "#FFFFFF"}), 
+                ], md=12),
+            ]),
             
             dcc.Graph(id="line_graph", figure=fig2),
         ]),
