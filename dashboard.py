@@ -96,7 +96,34 @@ app.layout = dbc.Container(
                     ], color="light", outline=True, style={"margin-top": "10px",
                                                            "box-shadow": "0 4px 4px 0 rgba(0,0,0,0.15), 0 4px 20px 0 rgba(0,0,0,0.19)",
                                                            "color": "#FFFFFF"}), 
-                ], md=12),
+                ], md=4),
+
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardBody([
+                            html.Span("Casos confirmado totais"),
+                            html.H3(style={"color": "#389fd6"}, id="casos-confirmados-text"),
+                            html.Span("Novos casos na data"),
+                            html.H5(id="novo-casos-text"),
+                        ])
+                    ], color="light", outline=True, style={"margin-top": "10px",
+                                                           "box-shadow": "0 4px 4px 0 rgba(0,0,0,0.15), 0 4px 20px 0 rgba(0,0,0,0.19)",
+                                                           "color": "#FFFFFF"}), 
+                ], md=4),
+
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardBody([
+                            html.Span("Óbitos confirmados"),
+                            html.H3(style={"color": "#DF2935"}, id="obitos-text"),
+                            html.Span("Óbitos na data"),
+                            html.H5(id="obitos-na-data-text"),
+                        ])
+                    ], color="light", outline=True, style={"margin-top": "10px",
+                                                           "box-shadow": "0 4px 4px 0 rgba(0,0,0,0.15), 0 4px 20px 0 rgba(0,0,0,0.19)",
+                                                           "color": "#FFFFFF"}), 
+                ], md=4),
+
             ]),
             
             dcc.Graph(id="line_graph", figure=fig2),
