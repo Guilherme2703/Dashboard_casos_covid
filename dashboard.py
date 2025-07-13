@@ -28,6 +28,10 @@ df_states_ = df_states[df_states["data"] == "2020-05-13"]
 brazil_states = json.load(open("geojson/brazil_geo.json"))
 df_data = df_states[df_states["estado"]=="RJ"]
 
+select_columns = {"casosAcumulado": "Casos Acumulados",
+                  "casosNovos": "Novos Casos",
+                  "obitosAcumulado": "Óbitos Totais",
+                  "obitsNovos": "Óbitos Por Dia",}
 
 #=========================================
 # Instanciação do Dash
@@ -125,15 +129,26 @@ app.layout = dbc.Container(
                 ], md=4),
 
             ]),
+
             
-            dcc.Graph(id="line_graph", figure=fig2),
-        ]),
+            html.Div([
+                html.P("Selecione que tipo de dado deseja visualizar:", style={"margin-top": "25px"}),
+                dcc.Dropdown(id="location-dropdown",
+                             options=[{"label": j, "value": i} for i, j in select_columns.items()],
+                             value="casosNovos",
+                             style={"margin-top": "10px"}
+                             ),
+                dcc.Graph(id="line_graph", figure=fig2),
+                ]),
+
+            ], md=5, style={"padding": "25px", "background-color": "#242424"}),
+            
 
         dbc.Col([
             dcc.Graph(id="choropleth-map", figure=fig)
-        ])
-    ])
-)
+        ], md=7)
+    ], class_name= "g-0")
+, fluid=True)
 
 if __name__ == "__main__":
     app.run(debug=True)
