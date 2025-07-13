@@ -108,7 +108,7 @@ app.layout = dbc.Container(
                             html.Span("Casos confirmados totais"),
                             html.H3(style={"color": "#389fd6"}, id="casos-confirmados-text"),
                             html.Span("Novos casos na data"),
-                            html.H5(id="novo-casos-text"),
+                            html.H5(id="novos-casos-text"),
                         ])
                     ], color="light", outline=True, style={"margin-top": "10px",
                                                            "box-shadow": "0 4px 4px 0 rgba(0,0,0,0.15), 0 4px 20px 0 rgba(0,0,0,0.19)",
@@ -153,6 +153,46 @@ app.layout = dbc.Container(
         ], md=7)
     ], class_name= "g-0")
 , fluid=True)
+
+#=========================================
+# Interactivity
+
+@app.callback(
+    [
+        Output("casos-recuperados-text", "children"),
+        Output("em-acompanhamento-text", "children"),
+        Output("casos-confirmados-text", "children"),
+        Output("novos-casos-text", "children"),
+        Output("obitos-text", "children"),
+        Output("obitos-na-data-text", "children"),
+    ],
+    [
+        Input("date-picker", "date"),
+        Input("location-button", "children")
+    ],
+)
+
+def display_status(date, location):
+    if location=="BRASIL":
+        df_data_on_date = df_brasil[df_brasil["data"] == date]
+    else:
+        df_data_on_date = df_states[(df_states["estado"] == location) & (df_states["data"] == date)]
+    
+    df_data_on_date["Recuperadosnovos"]
+    recuperados_novos = "-" if df_data_on_date["Recuperadosnovos"].isna().values[0] else f'{int(df_data_on_date["Recuperadosnovos"].values[0]):,}'.replace(",", ".") 
+    acompanhamentos_novos = "-" if df_data_on_date["emAcompanhamentoNovos"].isna().values[0]  else f'{int(df_data_on_date["emAcompanhamentoNovos"].values[0]):,}'.replace(",", ".") 
+    casos_acumulados = "-" if df_data_on_date["casosAcumulado"].isna().values[0]  else f'{int(df_data_on_date["casosAcumulado"].values[0]):,}'.replace(",", ".") 
+    casos_novos = "-" if df_data_on_date["casosNovos"].isna().values[0]  else f'{int(df_data_on_date["casosNovos"].values[0]):,}'.replace(",", ".") 
+    obitos_acumulado = "-" if df_data_on_date["obitosAcumulado"].isna().values[0]  else f'{int(df_data_on_date["obitosAcumulado"].values[0]):,}'.replace(",", ".") 
+    obitos_novos = "-" if df_data_on_date["obitosNovos"].isna().values[0]  else f'{int(df_data_on_date["obitosNovos"].values[0]):,}'.replace(",", ".") 
+    
+    return( recuperados_novos, 
+            acompanhamentos_novos, 
+            casos_acumulados,
+            casos_novos,
+            obitos_acumulado,
+            obitos_novos,)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
