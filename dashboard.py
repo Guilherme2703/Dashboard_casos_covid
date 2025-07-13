@@ -101,7 +101,7 @@ app.layout = dbc.Container(
                 dbc.Col([
                     dbc.Card([
                         dbc.CardBody([
-                            html.Span("Casos confirmado totais"),
+                            html.Span("Casos confirmados totais"),
                             html.H3(style={"color": "#389fd6"}, id="casos-confirmados-text"),
                             html.Span("Novos casos na data"),
                             html.H5(id="novo-casos-text"),
