@@ -145,7 +145,11 @@ app.layout = dbc.Container(
             
 
         dbc.Col([
-            dcc.Graph(id="choropleth-map", figure=fig)
+            dcc.Loading(id="loading-1", type="default",
+                        children=[
+                            dcc.Graph(id="choropleth-map", figure=fig, style={"height" : "100vh", "margin-right": "10px"}),
+                            ] 
+                        )
         ], md=7)
     ], class_name= "g-0")
 , fluid=True)
